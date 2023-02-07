@@ -10,7 +10,5 @@ public class FoodListApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FoodListApplication.class, args);
-
 	}
-
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -45,6 +46,28 @@ public class FoodServiceImpl implements FoodService {
         return foodDto;
     }
 
+    public List<FoodDto> getFoodCity(String city)
+    {
+        List<FoodDto> foodDtoList = new ArrayList<>();
+        foodRepository.findByCityCity(city).stream().forEach(food -> {
+            FoodDto foodDto = new FoodDto();
+            entityToDto(food, foodDto);
+            foodDtoList.add(foodDto);
+        });
+        return foodDtoList;
+    }
+
+    public List<FoodDto> getDatesFood(String city, String startDate, String endDate)
+    {
+        List<FoodDto> foodDtoList = new ArrayList<>();
+        foodRepository.findByCityCityAndDateBetween(city, startDate, endDate).stream().forEach(food -> {
+            FoodDto foodDto = new FoodDto();
+            entityToDto(food, foodDto);
+            foodDtoList.add(foodDto);
+        });
+        return foodDtoList;
+    }
+
     protected void entityToDto(Food food, FoodDto foodDto)
     {
         foodDto.setId(food.getId());
@@ -55,6 +78,7 @@ public class FoodServiceImpl implements FoodService {
         foodDto.setDessert(food.getDessert());
         foodDto.setSoftDrinks(food.getSoftDrinks());
         foodDto.setDate(food.getDate());
+        foodDto.setCity(food.getCity());
     }
     protected void dtoToEntity(FoodDto foodDto, Food food)
     {
@@ -67,5 +91,6 @@ public class FoodServiceImpl implements FoodService {
         food.setDessert(foodDto.getDessert());
         food.setSoftDrinks(foodDto.getSoftDrinks());
         food.setDate(foodDto.getDate());
+        food.setCity(foodDto.getCity());
     }
 }

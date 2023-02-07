@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -40,4 +41,9 @@ public class Food {
     @JsonFormat(pattern = "yyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Column(name = "date")
     private String date;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(foreignKey = @ForeignKey(name = "CITY_FK"))
+    @ToString.Exclude
+    private City city;
 }
