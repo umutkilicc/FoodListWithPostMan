@@ -12,7 +12,8 @@ public interface FoodDataRepository extends JpaRepository<FoodData, Long> {
 
     //List<FoodData> findByFoodName(String foodName);
     //List<FoodData> findByFoodNameLike(String foodName);
-    List<FoodData> findByFoodNameContaining(String foodName);
+    //List<FoodData> findByFoodNameContaining(String foodName);
+    List<FoodData> findByFoodNameIgnoreCaseContaining(String foodName);
     //List<FoodData> findByFoodNameStartingWith(String foodName);
     //List<FoodData> findByFoodNameEndingWith(String foodName);
 }
