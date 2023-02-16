@@ -1,9 +1,11 @@
 package com.foodList.foodList.Controller;
 
 import com.foodList.foodList.Dto.CityDto;
+import com.foodList.foodList.Dto.FoodDataDto;
 import com.foodList.foodList.Dto.FoodDto;
 import com.foodList.foodList.Repository.CityRepository;
 import com.foodList.foodList.Service.CityService;
+import com.foodList.foodList.Service.FoodDataService;
 import com.foodList.foodList.Service.Impl.FoodServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/food")
@@ -21,12 +21,15 @@ public class FoodController {
     private final FoodServiceImpl foodServiceImpl;
     private final CityRepository cityRepository;
     @Autowired
+    private final FoodDataService foodDataService;
+    @Autowired
     private final CityService cityService;
 
     public FoodController(FoodServiceImpl foodServiceImpl,
-                          CityRepository cityRepository, CityService cityService) {
+                          CityRepository cityRepository, FoodDataService foodDataService, CityService cityService) {
         this.foodServiceImpl = foodServiceImpl;
         this.cityRepository = cityRepository;
+        this.foodDataService = foodDataService;
         this.cityService = cityService;
     }
 
@@ -64,14 +67,25 @@ public class FoodController {
         denemeler.add(deneme);
         denemeler.add(foodServiceImpl.getFoodCity(city));
         return denemeler;
-        /*
-        return foodServiceImpl.getFoodCity(city);
-         */
+
+        //return foodServiceImpl.getFoodCity(city);
+
     }
+
 
     @GetMapping("/city/{city}/{startDate}/{endDate}")
     public @ResponseBody List<FoodDto> getDatesFood(@PathVariable("city") String city, @PathVariable("startDate") String startDate, @PathVariable("endDate") String endDate)
     {
         return foodServiceImpl.getDatesFood(city, startDate, endDate);
     }
+
+
+
+    @GetMapping("/search/{foodName}")
+    public @ResponseBody List<FoodDataDto> getBySearch(@PathVariable String foodName)
+    {
+        return foodDataService.deneme(foodName);
+    }
+
+
 }
